@@ -37,12 +37,17 @@ const SubcategoriesComponent = ({ catId }: Props) => {
 
   return (
     <div>
-      <button onClick={fetchSubcategories}>Fetch Subcategories</button>
+      <button
+        className='mx-4  bg-green-400 text-white outline-slate-800 p-2'
+        onClick={fetchSubcategories}
+      >
+        Fetch Subcategories
+      </button>
       {subcategories?.map((subCat, index) => (
         <ul key={index}>
-          <li>{subCat.subcat_name_en}</li>
+          <li className='mx-4'>{subCat.subcat_name_bn}</li>
           <li>
-            <Duas subCat_id={subCat.subcat_id} />
+            <Duas subCat_id={subCat.subcat_id} catId={subCat.cat_id} />
           </li>
         </ul>
       ))}

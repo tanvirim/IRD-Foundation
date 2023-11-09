@@ -2,22 +2,20 @@
 import React, { useState } from 'react';
 interface Dua {
   id: number;
-  cat_id: number;
-  subcat_id: number;
-  subcat_name_bn: string;
-  subcat_name_en: string;
-  no_of_dua: number;
+  cat_id: string;
+  dua_name_en: string;
 }
 
 interface Props {
   subCat_id: string;
+  catId: string;
 }
-const Duas = ({ subCat_id }: Props) => {
-  const [subcategories, setSubcategories] = useState<Dua[]>([]);
+const Duas = ({ subCat_id, catId }: Props) => {
+  const [duas, setDuas] = useState<Dua[]>([]);
 
-  const fetchSubcategories = () => {
+  const fetchDuas = () => {
     fetch(
-      `https://ird-foundation.onrender.com?category_id=${catId}&subcat_id${subCat_id}`
+      `https://ird-foundation.onrender.com?category_id=${catId}&subcategory_id=${subCat_id}`
     )
       .then((subRes) => {
         if (!subRes.ok) {
@@ -25,23 +23,28 @@ const Duas = ({ subCat_id }: Props) => {
         }
         return subRes.json();
       })
-      .then((subcategoriesData) => {
-        const sub = subcategoriesData.subcategories;
-        setSubcategories(sub);
-        console.log('cat', sub);
+      .then((duasData) => {
+        const dua = duasData.duas;
+        setDuas(dua);
+        console.log('cat', dua);
       })
       .catch((error) => {
-        console.error('Error fetching subcategories: ', error);
+        console.error('Error fetching duas: ', error);
         // Handle errors, e.g., display an error message
       });
   };
 
   return (
     <div>
-      <button onClick={fetchSubcategories}>Fetch Subcategories</button>
-      {subcategories?.map((subCat, index) => (
+      <button
+        className='mx-8 p-2 bg-green-400 text-white outline-slate-800'
+        onClick={fetchDuas}
+      >
+        Fetch duas
+      </button>
+      {duas?.map((dua, index) => (
         <ul key={index}>
-          <li>{subCat.subcat_name_en}</li>
+          <li className='mx-8'>{dua.dua_name_bn}</li>
         </ul>
       ))}
     </div>

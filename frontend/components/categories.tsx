@@ -23,7 +23,7 @@ const CategoryTable: React.FC = async () => {
     <div className='border-x-2 border-black w-full'>
       {category.categories?.map((cat, index) => (
         <ul key={index}>
-          <li>{cat.cat_name_en}</li>
+          <li>{cat.cat_name_bn}</li>
           <li>
             <SubcategoriesComponent catId={cat.cat_id} />
           </li>

@@ -64,6 +64,24 @@ app.get('/', (req, res) => {
   }
 });
 
+// Create a route to fetch all duas from a specific category
+app.get('/duas', (req, res) => {
+  const { category_id } = req.query;
+
+  if (!category_id) {
+    res.status(400).json({ error: 'Category ID is required.' });
+    return;
+  }
+
+  db.all('SELECT * FROM dua WHERE cat_id = ?', [category_id], (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    res.json({ duas: rows });
+  });
+});
+
 // // Endpoint to fetch categories
 // app.get('/category', (req, res) => {
 //   db.all('SELECT * FROM category', (err, rows) => {
