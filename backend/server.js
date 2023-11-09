@@ -23,7 +23,7 @@ const db = new sqlite3.Database(
 );
 
 //query
-app.get('/data', (req, res) => {
+app.get('/', (req, res) => {
   const { category_id, subcategory_id } = req.query;
 
   if (category_id && !subcategory_id) {

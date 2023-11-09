@@ -2,21 +2,26 @@ import React from 'react';
 
 interface Category {
   id: number;
-  cat_icon: string;
+  cat_id: number;
   cat_name_bn: string;
   cat_name_en: string;
-  no_of_dua: number;
   no_of_subcat: number;
+  no_of_dua: number;
+  cat_icon: string;
+}
+
+interface CategoriesResponse {
+  categories: Category[];
 }
 
 const CategoryTable = async () => {
-  const res = await fetch('http://localhost:8080/data');
-  const category: Category[] = await res.json();
+  const res = await fetch('https://ird-foundation.onrender.com/data');
+  const category = (await res.json()) as CategoriesResponse;
 
   console.log('category', category);
   return (
     <div>
-      {category?.map((cat, index) => (
+      {category.categories?.map((cat, index) => (
         <ul key={index}>
           <li>{cat.cat_name_bn}</li>
           <li>{cat.cat_name_en}</li>
