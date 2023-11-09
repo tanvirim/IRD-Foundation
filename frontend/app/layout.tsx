@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Navbar from './components/navbar';
-import LeftSidebar from './components/leftSidebar';
-import RightSidebar from './components/rightSidebar';
+import Navbar from '../components/navbar';
+import LeftSidebar from '../components/leftSidebar';
+import RightSidebar from '../components/rightSidebar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,20 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className='flex flex-col md:flex-row'>
-        <div className='hidden md:block'>
-          {/* LeftSidebar - will only be visible from medium (md) breakpoint and above */}
-          <LeftSidebar />
-        </div>
-        <div className='w-full'>
-          {/* Navbar - always visible, taking full width */}
-          <Navbar />
-          <main className=''>{children}</main>
-        </div>
-        <div className='hidden md:block'>
-          {/* RightSidebar - will only be visible from medium (md) breakpoint and above */}
-          <RightSidebar />
-        </div>
+      <body>
+        <main className=''>{children}</main>
       </body>
     </html>
   );

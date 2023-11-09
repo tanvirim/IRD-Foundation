@@ -1,8 +1,9 @@
 import React from 'react';
+import SubcategoriesComponent from './subCategory';
 
 interface Category {
   id: number;
-  cat_id: number;
+  cat_id: string;
   cat_name_bn: string;
   cat_name_en: string;
   no_of_subcat: number;
@@ -14,17 +15,18 @@ interface CategoriesResponse {
   categories: Category[];
 }
 
-const CategoryTable = async () => {
-  const res = await fetch('https://ird-foundation.onrender.com/data');
+const CategoryTable: React.FC = async () => {
+  const res = await fetch('https://ird-foundation.onrender.com');
   const category = (await res.json()) as CategoriesResponse;
 
-  console.log('category', category);
   return (
-    <div>
+    <div className='border-x-2 border-black w-full'>
       {category.categories?.map((cat, index) => (
         <ul key={index}>
-          <li>{cat.cat_name_bn}</li>
           <li>{cat.cat_name_en}</li>
+          <li>
+            <SubcategoriesComponent catId={cat.cat_id} />
+          </li>
         </ul>
       ))}
     </div>
