@@ -5,7 +5,7 @@ import { CategoryTable, DuaList } from '@/components';
 import { ExitSvg } from '@/public';
 import Image from 'next/image';
 const Main = () => {
-  const [showCategoryTable, setShowCategoryTable] = useState(true);
+  const [showCategoryTable, setShowCategoryTable] = useState<boolean>(true);
 
   const handleButtonClick = () => {
     setShowCategoryTable((prevState) => !prevState);
@@ -21,7 +21,7 @@ const Main = () => {
               <Image src={ExitSvg} alt='polygon' width={20} height={20} />
             </button>
           </div>
-          <CategoryTable />
+          <CategoryTable setShowCategoryTable={setShowCategoryTable} />
         </div>
       )}
 

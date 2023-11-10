@@ -2,9 +2,9 @@
 // Import necessary libraries and components
 import React, { useState, useEffect } from 'react';
 import SubcategoriesComponent from './subCategory';
-import Image from 'next/image';
 
-import { CategoryCard } from '@/components';
+import { CategoryCard, SkeletonColumn } from '@/components';
+import { useDuaStore } from '@/store';
 
 // Define interfaces
 export interface Category {
@@ -34,7 +34,13 @@ interface subCatArgument {
   catId: string;
 }
 
-const CategoryTable = () => {
+interface Props {
+  setShowCategoryTable: (arg0: boolean) => void;
+}
+
+const CategoryTable = ({ setShowCategoryTable }: Props) => {
+  const { category_id, setCategoryId } = useDuaStore();
+
   // State variables
   const [categoryData, setCategoryData] = useState<CategoriesResponse | null>(
     null
@@ -65,6 +71,9 @@ const CategoryTable = () => {
 
   // Fetch subcategories and handle toggle effect
   const fetchSubcategories = ({ catId }: subCatArgument) => {
+    setCategoryId(catId);
+    setShowCategoryTable((prevState: boolean) => !prevState);
+
     if (selectedCategoryId === catId) {
       // If the clicked category is already selected, hide subcategories
       setSubcategoriesMap((prevMap) => new Map(prevMap.set(catId, [])));
@@ -92,26 +101,30 @@ const CategoryTable = () => {
 
   return (
     <div className='overflow-scroll w-[429px] h-[837px]'>
-      {categoryData?.categories?.map((cat, index) => (
-        <ul key={index}>
-          <li
-            className='cursor-pointer my-4'
-            key={index}
-            onClick={() => fetchSubcategories({ catId: cat.cat_id })}
-          >
-            <CategoryCard Category={cat} />
-          </li>
-          <li>
-            <SubcategoriesComponent
-              subcategories={
-                selectedCategoryId === cat.cat_id
-                  ? subcategoriesMap.get(cat.cat_id) || []
-                  : []
-              }
-            />
-          </li>
-        </ul>
-      ))}
+      {categoryData ? (
+        categoryData.categories.map((cat, index) => (
+          <ul key={index}>
+            <li
+              className='cursor-pointer my-4'
+              key={index}
+              onClick={() => fetchSubcategories({ catId: cat.cat_id })}
+            >
+              <CategoryCard Category={cat} />
+            </li>
+            <li>
+              <SubcategoriesComponent
+                subcategories={
+                  selectedCategoryId === cat.cat_id
+                    ? subcategoriesMap.get(cat.cat_id) || []
+                    : []
+                }
+              />
+            </li>
+          </ul>
+        ))
+      ) : (
+        <SkeletonColumn />
+      )}
     </div>
   );
 };
