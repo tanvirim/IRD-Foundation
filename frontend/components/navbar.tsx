@@ -1,7 +1,19 @@
 import React from 'react';
-
+import polygon from '../public/nav/Polygon 2.svg';
+import userLogo from '../public//nav/Vector.svg';
+import Image from 'next/image';
 const Navbar = () => {
-  return <div>nav</div>;
+  return (
+    <>
+      <div className='flex justify-between mb-2'>
+        <p>Duas Page</p>
+        <div className='flex'>
+          <Image src={userLogo} alt='polygon' width={30} height={30} />
+          <Image className='mt-5' src={polygon} alt='polygon' />
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Navbar;

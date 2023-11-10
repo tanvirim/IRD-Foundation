@@ -31,7 +31,6 @@ const SubcategoriesComponent = ({ subcategories }: Props) => {
       .then((duasData) => {
         const dua = duasData.duas;
         setDuasMap((prevMap) => new Map(prevMap.set(subCat_id, dua)));
-        console.log('duas', dua);
       })
       .catch((error) => {
         console.error('Error fetching duas: ', error);

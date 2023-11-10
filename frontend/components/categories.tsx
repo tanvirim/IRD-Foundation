@@ -1,8 +1,13 @@
 'use client';
+// Import necessary libraries and components
 import React, { useState, useEffect } from 'react';
 import SubcategoriesComponent from './subCategory';
+import Image from 'next/image';
 
-interface Category {
+import { CategoryCard } from '@/components';
+
+// Define interfaces
+export interface Category {
   id: number;
   cat_id: string;
   cat_name_bn: string;
@@ -30,10 +35,20 @@ interface subCatArgument {
 }
 
 const CategoryTable = () => {
+  // State variables
   const [categoryData, setCategoryData] = useState<CategoriesResponse | null>(
     null
   );
 
+  const [subcategoriesMap, setSubcategoriesMap] = useState<
+    Map<string, SubCategory[]>
+  >(new Map());
+
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null
+  );
+
+  // Fetch category data on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,31 +63,35 @@ const CategoryTable = () => {
     fetchData();
   }, []);
 
-  const [subcategoriesMap, setSubcategoriesMap] = useState<
-    Map<string, SubCategory[]>
-  >(new Map());
-
+  // Fetch subcategories and handle toggle effect
   const fetchSubcategories = ({ catId }: subCatArgument) => {
-    fetch(`https://ird-foundation.onrender.com?category_id=${catId}`)
-      .then((subRes) => {
-        if (!subRes.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return subRes.json();
-      })
-      .then((subcategoriesData) => {
-        const sub = subcategoriesData.subcategories;
-        setSubcategoriesMap((prevMap) => new Map(prevMap.set(catId, sub)));
-        console.log('cat', sub);
-      })
-      .catch((error) => {
-        console.error('Error fetching subcategories: ', error);
-        // Handle errors, e.g., display an error message
-      });
+    if (selectedCategoryId === catId) {
+      // If the clicked category is already selected, hide subcategories
+      setSubcategoriesMap((prevMap) => new Map(prevMap.set(catId, [])));
+      setSelectedCategoryId(null);
+    } else {
+      // Otherwise, fetch and display subcategories
+      fetch(`https://ird-foundation.onrender.com?category_id=${catId}`)
+        .then((subRes) => {
+          if (!subRes.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return subRes.json();
+        })
+        .then((subcategoriesData) => {
+          const sub = subcategoriesData.subcategories;
+          setSubcategoriesMap((prevMap) => new Map(prevMap.set(catId, sub)));
+          setSelectedCategoryId(catId);
+          console.log('Subcategories:', sub);
+        })
+        .catch((error) => {
+          console.error('Error fetching subcategories: ', error);
+        });
+    }
   };
 
   return (
-    <div className=' overflow-scroll w-[429px] h-[837px]'>
+    <div className='overflow-scroll w-[429px] h-[837px]'>
       {categoryData?.categories?.map((cat, index) => (
         <ul key={index}>
           <li
@@ -80,11 +99,15 @@ const CategoryTable = () => {
             key={index}
             onClick={() => fetchSubcategories({ catId: cat.cat_id })}
           >
-            {cat.cat_name_en}
+            <CategoryCard Category={cat} />
           </li>
           <li>
             <SubcategoriesComponent
-              subcategories={subcategoriesMap.get(cat.cat_id) || []}
+              subcategories={
+                selectedCategoryId === cat.cat_id
+                  ? subcategoriesMap.get(cat.cat_id) || []
+                  : []
+              }
             />
           </li>
         </ul>

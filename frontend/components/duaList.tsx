@@ -5,6 +5,7 @@ interface Dua {
   id: number;
   cat_id: string;
   dua_name_en: string;
+  top_bn: string;
 }
 
 const DuaList = () => {
@@ -13,10 +14,10 @@ const DuaList = () => {
     const fetchDuas = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/duas?category_id=1`
+          `https://ird-foundation.onrender.com/duas/?category_id=1`
         );
         const data = await response.json();
-        console.log('dua', data);
+
         setDuas(data.duas);
       } catch (error) {
         console.error('Error fetching duas:', error);
@@ -26,13 +27,14 @@ const DuaList = () => {
     fetchDuas();
   }, []);
 
-  console.log(duas);
   return (
-    <div>
+    <div className='overflow-scroll'>
       <h2>Dua List</h2>
       <ul>
         {duas.map((dua) => (
-          <li key={dua.id}>{dua.dua_name_en}</li>
+          <li className='p-4' key={dua.id}>
+            {dua.top_bn}
+          </li>
         ))}
       </ul>
     </div>
