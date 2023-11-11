@@ -35,7 +35,7 @@ interface subCatArgument {
 }
 
 interface Props {
-  setShowCategoryTable: (arg0: boolean) => void;
+  setShowCategoryTable: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CategoryTable = ({ setShowCategoryTable }: Props) => {
@@ -72,7 +72,7 @@ const CategoryTable = ({ setShowCategoryTable }: Props) => {
   // Fetch subcategories and handle toggle effect
   const fetchSubcategories = ({ catId }: subCatArgument) => {
     setCategoryId(catId);
-    setShowCategoryTable((prevState: boolean) => !prevState);
+    setShowCategoryTable((prevState) => !prevState);
 
     if (selectedCategoryId === catId) {
       // If the clicked category is already selected, hide subcategories
