@@ -8,7 +8,7 @@ import { useDuaStore } from '@/store';
 
 // Define interfaces
 export interface Category {
-  id: number;
+  id: string;
   cat_id: string;
   cat_name_bn: string;
   cat_name_en: string;
@@ -31,7 +31,7 @@ interface CategoriesResponse {
 }
 
 interface subCatArgument {
-  catId: string;
+  category: Category;
 }
 
 interface Props {
@@ -39,7 +39,7 @@ interface Props {
 }
 
 const CategoryTable = ({ setShowCategoryTable }: Props) => {
-  const { category_id, setCategoryId } = useDuaStore();
+  const { setCategory } = useDuaStore();
 
   // State variables
   const [categoryData, setCategoryData] = useState<CategoriesResponse | null>(
@@ -70,17 +70,20 @@ const CategoryTable = ({ setShowCategoryTable }: Props) => {
   }, []);
 
   // Fetch subcategories and handle toggle effect
-  const fetchSubcategories = ({ catId }: subCatArgument) => {
-    setCategoryId(catId);
-    setShowCategoryTable((prevState) => !prevState);
+  const fetchSubcategories = ({ category }: subCatArgument) => {
+    setCategory(category);
 
-    if (selectedCategoryId === catId) {
+    if (selectedCategoryId === category.cat_id) {
       // If the clicked category is already selected, hide subcategories
-      setSubcategoriesMap((prevMap) => new Map(prevMap.set(catId, [])));
+      setSubcategoriesMap(
+        (prevMap) => new Map(prevMap.set(category.cat_id, []))
+      );
       setSelectedCategoryId(null);
     } else {
       // Otherwise, fetch and display subcategories
-      fetch(`https://ird-foundation.onrender.com?category_id=${catId}`)
+      fetch(
+        `https://ird-foundation.onrender.com?category_id=${category.cat_id}`
+      )
         .then((subRes) => {
           if (!subRes.ok) {
             throw new Error('Network response was not ok');
@@ -89,9 +92,10 @@ const CategoryTable = ({ setShowCategoryTable }: Props) => {
         })
         .then((subcategoriesData) => {
           const sub = subcategoriesData.subcategories;
-          setSubcategoriesMap((prevMap) => new Map(prevMap.set(catId, sub)));
-          setSelectedCategoryId(catId);
-          console.log('Subcategories:', sub);
+          setSubcategoriesMap(
+            (prevMap) => new Map(prevMap.set(category.cat_id, sub))
+          );
+          setSelectedCategoryId(category.cat_id);
         })
         .catch((error) => {
           console.error('Error fetching subcategories: ', error);
@@ -100,14 +104,14 @@ const CategoryTable = ({ setShowCategoryTable }: Props) => {
   };
 
   return (
-    <div className='overflow-scroll w-[429px] h-[837px]'>
+    <div className='w-[429px] h-[537px] overflow-x-hidden overflow-y-auto'>
       {categoryData ? (
         categoryData.categories.map((cat, index) => (
           <ul key={index}>
             <li
               className='cursor-pointer my-4'
               key={index}
-              onClick={() => fetchSubcategories({ catId: cat.cat_id })}
+              onClick={() => fetchSubcategories({ category: cat })}
             >
               <CategoryCard Category={cat} />
             </li>
@@ -118,6 +122,7 @@ const CategoryTable = ({ setShowCategoryTable }: Props) => {
                     ? subcategoriesMap.get(cat.cat_id) || []
                     : []
                 }
+                setShowCategoryTable={setShowCategoryTable}
               />
             </li>
           </ul>

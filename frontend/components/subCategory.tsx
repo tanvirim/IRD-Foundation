@@ -13,9 +13,13 @@ export interface Dua {
 }
 interface Props {
   subcategories: SubCategory[];
+  setShowCategoryTable: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SubcategoriesComponent = ({ subcategories }: Props) => {
+const SubcategoriesComponent = ({
+  subcategories,
+  setShowCategoryTable,
+}: Props) => {
   const [duasMap, setDuasMap] = useState<Map<string, Dua[]>>(new Map());
 
   const fetchDuas = ({ catId, subCat_id }: DuaArgument) => {
@@ -52,6 +56,7 @@ const SubcategoriesComponent = ({ subcategories }: Props) => {
           </li>
           <li>
             <Duas
+              setShowCategoryTable={setShowCategoryTable}
               subCat_id={subCat.subcat_id}
               catId={subCat.cat_id}
               duas={duasMap.get(subCat.subcat_id) || []}

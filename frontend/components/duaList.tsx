@@ -10,16 +10,16 @@ interface Dua {
 }
 
 const DuaList = () => {
-  const { category_id: storedCategoryId = '1' } = useDuaStore();
+  const { category } = useDuaStore();
   const [duas, setDuas] = useState<Dua[]>([]);
 
   useEffect(() => {
-    if (storedCategoryId) {
+    if (category.cat_id) {
       // Fetch data based on the category_id prop
       const fetchDuas = async () => {
         try {
           const response = await fetch(
-            `https://ird-foundation.onrender.com/duas/?category_id=${storedCategoryId}`
+            `https://ird-foundation.onrender.com/duas/?category_id=${category.cat_id}`
           );
           const data = await response.json();
           setDuas(data.duas);
@@ -30,12 +30,13 @@ const DuaList = () => {
 
       fetchDuas();
     }
-  }, [storedCategoryId]);
+  }, [category.cat_id]);
 
   return (
-    <div className='overflow-scroll'>
+    <div className='overflow-x-hidden overflow-y-auto h-screen'>
       <h2>Dua List</h2>
       <ul>
+        <li className='font-bold'>{category.cat_name_bn}</li>
         {duas.map((dua) => (
           <li className='p-4' key={dua.id}>
             <div>{dua.top_bn}</div>
