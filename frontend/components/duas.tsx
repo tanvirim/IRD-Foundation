@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 'use client';
 import React, { useState } from 'react';
-import { Dua } from './subCategory';
+import { Dua } from '@/types';
 
 interface Props {
   subCat_id: string;

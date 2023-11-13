@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import Duas from './duas';
-import { SubCategory } from './categories';
+import { SubCategory, Dua } from '@/types';
 
 interface DuaArgument {
   catId: string;
   subCat_id: string;
 }
-export interface Dua {
-  id: number;
-  cat_id: string;
-  dua_name_en: string;
-}
+
 interface Props {
   subcategories: SubCategory[];
   setShowCategoryTable: React.Dispatch<React.SetStateAction<boolean>>;

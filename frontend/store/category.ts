@@ -1,6 +1,6 @@
 // duaStore.ts
 import { create } from 'zustand';
-import { Category } from '@/components/categories';
+import { Category } from '@/types';
 
 interface DuaStore {
   category: Category;

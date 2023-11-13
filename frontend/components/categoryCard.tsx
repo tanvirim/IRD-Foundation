@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { CatLogo } from '@/public';
-import { Category } from './categories';
+import { Category } from '@/types';
 
 interface Props {
   Category: Category;

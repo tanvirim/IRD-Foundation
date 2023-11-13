@@ -1,30 +1,10 @@
 'use client';
-// Import necessary libraries and components
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import SubcategoriesComponent from './subCategory';
 
 import { CategoryCard, SkeletonColumn } from '@/components';
 import { useDuaStore } from '@/store';
-
-// Define interfaces
-export interface Category {
-  id: string;
-  cat_id: string;
-  cat_name_bn: string;
-  cat_name_en: string;
-  no_of_subcat: number;
-  no_of_dua: number;
-  cat_icon: string;
-}
-
-export interface SubCategory {
-  id: number;
-  cat_id: string;
-  subcat_id: string;
-  subcat_name_bn: string;
-  subcat_name_en: string;
-  no_of_dua: number;
-}
+import { Category, SubCategory } from '@/types';
 
 interface CategoriesResponse {
   categories: Category[];
@@ -69,6 +49,9 @@ const CategoryTable = ({ setShowCategoryTable }: Props) => {
     fetchData();
   }, []);
 
+  // Memoize the categoryData
+  const memoizedCategoryData = useMemo(() => categoryData, [categoryData]);
+
   // Fetch subcategories and handle toggle effect
   const fetchSubcategories = ({ category }: subCatArgument) => {
     setCategory(category);
@@ -104,9 +87,9 @@ const CategoryTable = ({ setShowCategoryTable }: Props) => {
   };
 
   return (
-    <div className='w-[429px] h-[537px] overflow-x-hidden overflow-y-auto'>
-      {categoryData ? (
-        categoryData.categories.map((cat, index) => (
+    <div className='w-[429px] h-[537px] overflow-auto'>
+      {memoizedCategoryData ? (
+        memoizedCategoryData.categories.map((cat, index) => (
           <ul key={index}>
             <li
               className='cursor-pointer my-4'

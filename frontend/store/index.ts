@@ -1,3 +1,3 @@
-import { useDuaStore } from './categoryId';
+import { useDuaStore } from './category';
 
 export { useDuaStore };
