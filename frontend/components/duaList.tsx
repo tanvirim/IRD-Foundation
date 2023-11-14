@@ -22,13 +22,29 @@ const DuaList = () => {
   // Use useLayoutEffect to ensure scrolling happens after rendering
   useLayoutEffect(() => {
     if (subcategoryId && subcategoryRef.current) {
-      subcategoryRef.current.scrollIntoView({ behavior: 'smooth' });
+      const parentContainer = subcategoryRef.current.parentElement;
+
+      // Calculate the scroll position, considering the offset
+      const scrollPosition = subcategoryRef.current.offsetTop;
+
+      parentContainer?.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth',
+      });
     }
   }, [subcategoryId]);
 
   useLayoutEffect(() => {
     if (duaId && duaRef.current) {
-      duaRef.current.scrollIntoView({ behavior: 'smooth' });
+      const parentContainer = duaRef.current.parentElement;
+
+      // Calculate the scroll position, considering the offset
+      const scrollPosition = duaRef.current.offsetTop;
+
+      parentContainer?.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth',
+      });
     }
   }, [duaId]);
 
@@ -51,8 +67,6 @@ const DuaList = () => {
     }
   }, [category.cat_id]);
 
-  console.log(subcategories);
-
   // Group duas by subcat_id
   const groupedDuas: Record<string, Dua[]> = {};
   duas.forEach((dua) => {
@@ -63,9 +77,10 @@ const DuaList = () => {
   });
 
   return (
-    <div className='overflow-x-hidden overflow-y-auto h-screen'>
+    <div className='overflow-x-hidden overflow-y-scroll h-screen'>
       <h2>Dua List</h2>
       <div className='font-bold  text-lg'>{category.cat_name_bn}</div>
+
       {subcategories.map((subcat, index) => (
         <div
           key={index}
