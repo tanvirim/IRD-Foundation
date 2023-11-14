@@ -10,7 +10,7 @@ export interface Category {
 }
 
 export interface SubCategory {
-  id: number;
+  id: string;
   cat_id: string;
   subcat_id: string;
   subcat_name_bn: string;
@@ -19,7 +19,7 @@ export interface SubCategory {
 }
 
 export interface Dua {
-  id: number;
+  id: string;
   cat_id: string;
   dua_name_en: string;
 }

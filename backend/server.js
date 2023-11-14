@@ -82,59 +82,23 @@ app.get('/duas', (req, res) => {
   });
 });
 
-// // Endpoint to fetch categories
-// app.get('/category', (req, res) => {
-//   db.all('SELECT * FROM category', (err, rows) => {
-//     if (err) {
-//       res.status(500).json({ error: err.message });
-//       return;
-//     }
-//     res.json({ categories: rows });
-//   });
-// });
+// app.get('/duas', (req, res) => {
+//   const { cat_id, subcat_id } = req.query;
 
-// // Endpoint to fetch duas
-// app.get('/dua', (req, res) => {
-//   db.all('SELECT * FROM dua', (err, rows) => {
-//     if (err) {
-//       res.status(500).json({ error: err.message });
-//       return;
-//     }
-//     res.json({ duas: rows });
-//   });
-// });
+//   if (!cat_id) {
+//     res.status(400).json({ error: 'Category ID is required.' });
+//     return;
+//   }
 
-// // Endpoint to fetch subcategories
-// app.get('/sub_category', (req, res) => {
-//   db.all('SELECT * FROM sub_category', (err, rows) => {
-//     if (err) {
-//       res.status(500).json({ error: err.message });
-//       return;
-//     }
-//     res.json({ subcategories: rows });
-//   });
-// });
+//   let query = 'SELECT * FROM dua WHERE cat_id = ?';
+//   const params = [cat_id];
 
-// // Endpoint to fetch subcategories for a specific category
-// app.get('/sub_category/:cat_id', (req, res) => {
-//   const cat_id = parseInt(req.params.cat_id, 10);
-//   db.all(
-//     'SELECT * FROM sub_category WHERE cat_id IN (?)',
-//     [cat_id],
-//     (err, rows) => {
-//       if (err) {
-//         res.status(500).json({ error: err.message });
-//         return;
-//       }
-//       res.json({ subcategories: rows });
-//     }
-//   );
-// });
+//   if (subcat_id) {
+//     query += ' AND subcat_id = ?';
+//     params.push(subcat_id);
+//   }
 
-// // Endpoint to fetch duas for a specific subcategory
-// app.get('/dua/:subcat_id', (req, res) => {
-//   const subcat_id = parseInt(req.params.subcat_id, 10);
-//   db.all('SELECT * FROM dua WHERE subcat_id = ?', [subcat_id], (err, rows) => {
+//   db.all(query, params, (err, rows) => {
 //     if (err) {
 //       res.status(500).json({ error: err.message });
 //       return;
@@ -143,7 +107,6 @@ app.get('/duas', (req, res) => {
 //   });
 // });
 
-//port
 const port = 8080 || process.env.PORT;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

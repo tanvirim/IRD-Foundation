@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Duas from './duas';
 import { SubCategory, Dua } from '@/types';
+import { useDuaStore } from '@/store';
 
 interface DuaArgument {
   catId: string;
@@ -17,6 +18,7 @@ const SubcategoriesComponent = ({
   setShowCategoryTable,
 }: Props) => {
   const [duasMap, setDuasMap] = useState<Map<string, Dua[]>>(new Map());
+  const { setSubcategoryId } = useDuaStore();
 
   const fetchDuas = ({ catId, subCat_id }: DuaArgument) => {
     fetch(
@@ -36,6 +38,8 @@ const SubcategoriesComponent = ({
         console.error('Error fetching duas: ', error);
         // Handle errors, e.g., display an error message
       });
+
+    setSubcategoryId(subCat_id);
   };
 
   return (

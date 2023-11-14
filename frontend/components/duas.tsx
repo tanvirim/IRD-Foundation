@@ -1,8 +1,12 @@
 /* eslint-disable react/jsx-key */
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { Dua } from '@/types';
+import { useDuaStore } from '@/store';
 
+interface DuaArgument {
+  duaId: string;
+}
 interface Props {
   subCat_id: string;
   catId: string;
@@ -10,8 +14,11 @@ interface Props {
   setShowCategoryTable: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Duas = ({ subCat_id, catId, duas, setShowCategoryTable }: Props) => {
-  const handleCategoryClick = () => {
+const Duas = ({ duas, setShowCategoryTable }: Props) => {
+  const { setDuaId } = useDuaStore();
+  const handleCategoryClick = ({ duaId }: DuaArgument) => {
+    setDuaId(duaId);
+
     if (window.innerWidth < 768) {
       setShowCategoryTable((prevState) => !prevState);
     }
@@ -21,7 +28,10 @@ const Duas = ({ subCat_id, catId, duas, setShowCategoryTable }: Props) => {
     <div>
       {duas?.map((dua, index) => (
         <ul key={index}>
-          <li onClick={handleCategoryClick} className='mx-8 cursor-pointer'>
+          <li
+            onClick={() => handleCategoryClick({ duaId: dua.id })}
+            className='mx-8 cursor-pointer'
+          >
             {dua.dua_name_en}
           </li>
         </ul>

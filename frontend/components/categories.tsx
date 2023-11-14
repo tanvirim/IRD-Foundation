@@ -19,7 +19,7 @@ interface Props {
 }
 
 const CategoryTable = ({ setShowCategoryTable }: Props) => {
-  const { setCategory } = useDuaStore();
+  const { setCategory, setSubcategories } = useDuaStore();
 
   // State variables
   const [categoryData, setCategoryData] = useState<CategoriesResponse | null>(
@@ -75,6 +75,7 @@ const CategoryTable = ({ setShowCategoryTable }: Props) => {
         })
         .then((subcategoriesData) => {
           const sub = subcategoriesData.subcategories;
+          setSubcategories(sub);
           setSubcategoriesMap(
             (prevMap) => new Map(prevMap.set(category.cat_id, sub))
           );
