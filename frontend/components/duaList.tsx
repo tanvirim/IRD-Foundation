@@ -1,7 +1,7 @@
 'use client';
 import { useDuaStore } from '@/store';
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
-
+import ReactPlayer from 'react-player';
 interface Dua {
   id: string;
   cat_id: string;
@@ -96,9 +96,7 @@ const DuaList = () => {
               >
                 <div>{dua.top_bn}</div>
                 <div>
-                  <audio controls>
-                    <source src={dua.audio} type='audio/mp3' />
-                  </audio>
+                  <ReactPlayer width='300px' url={dua.audio} controls />
                 </div>
               </li>
             ))}
