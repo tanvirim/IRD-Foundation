@@ -11,16 +11,15 @@ interface Props {
   subCat_id: string;
   catId: string;
   duas: Dua[];
-  setShowCategoryTable: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Duas = ({ duas, setShowCategoryTable }: Props) => {
-  const { setDuaId } = useDuaStore();
+const Duas = ({ duas }: Props) => {
+  const { setDuaId, setBooleanValue, isBooleanValue } = useDuaStore();
   const handleCategoryClick = ({ duaId }: DuaArgument) => {
     setDuaId(duaId);
 
     if (window.innerWidth < 768) {
-      setShowCategoryTable((prevState) => !prevState);
+      setBooleanValue(!isBooleanValue);
     }
   };
 

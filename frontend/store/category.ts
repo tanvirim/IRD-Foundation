@@ -1,22 +1,31 @@
-// duaStore.ts
 import { create } from 'zustand';
 import { Category, SubCategory } from '@/types';
 
 interface DuaStore {
-  category: Category;
+  isBooleanValue: boolean;
+  setBooleanValue: (value: boolean) => void;
+
   subcategoryId: string;
   setSubcategoryId: (newsubcategoryId: string) => void;
+
   duaId: string;
   setDuaId: (newDuaId: string) => void;
-  subcategories: SubCategory[];
+
+  category: Category;
   setCategory: (newCategory: Category) => void;
+
+  subcategories: SubCategory[];
   setSubcategories: (newSubcategories: SubCategory[]) => void;
 }
 
 export const useDuaStore = create<DuaStore>((set) => ({
+  isBooleanValue: true,
+  setBooleanValue: (value) => set({ isBooleanValue: value }),
+
   subcategoryId: '1',
   setSubcategoryId: (newsubcategoryId: string) =>
     set({ subcategoryId: newsubcategoryId }),
+
   duaId: '1',
   setDuaId: (newDuaId: string) => set({ duaId: newDuaId }),
 
@@ -92,6 +101,7 @@ export const useDuaStore = create<DuaStore>((set) => ({
   ],
 
   setCategory: (newCategory: Category) => set({ category: newCategory }),
+
   setSubcategories: (newSubcategories: SubCategory[]) =>
     set({ subcategories: newSubcategories }),
 }));

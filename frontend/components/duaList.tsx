@@ -1,19 +1,24 @@
 'use client';
 import { useDuaStore } from '@/store';
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
-import ReactPlayer from 'react-player';
-interface Dua {
-  id: string;
-  cat_id: string;
-  dua_name_en: string;
-  top_bn: string;
-  audio: string;
-  subcat_id: string;
-}
+import AllahLogo from '../public/category/allah.svg';
+import { FaBars } from 'react-icons/fa';
+import { Dua } from '@/types';
+import Image from 'next/image';
 
 const DuaList = () => {
-  const { category, subcategories, subcategoryId, duaId } = useDuaStore();
-  console.log('duaId', duaId);
+  const {
+    category,
+    subcategories,
+    subcategoryId,
+    duaId,
+    setBooleanValue,
+    isBooleanValue,
+  } = useDuaStore();
+  const handleButtonClick = () => {
+    setBooleanValue(!isBooleanValue);
+  };
+
   const [duas, setDuas] = useState<Dua[]>([]);
   // Create a ref for the subcategory div
   const subcategoryRef = useRef<HTMLDivElement>(null);
@@ -78,25 +83,65 @@ const DuaList = () => {
 
   return (
     <div className='overflow-x-hidden overflow-y-scroll h-screen'>
-      <h2>Dua List</h2>
-      <div className='font-bold  text-lg'>{category.cat_name_bn}</div>
+      <div
+        onClick={handleButtonClick}
+        className='flex gap-2  cursor-pointer text-lg bg-white p-4 mx-4 rounded-2xl'
+      >
+        <div className='mt-1 text-green-600'>
+          <FaBars />
+        </div>
+        <div className='font-semibold'>{category.cat_name_bn}</div>
+      </div>
 
       {subcategories.map((subcat, index) => (
         <div
           key={index}
           ref={subcategoryId === subcat.subcat_id ? subcategoryRef : null}
         >
-          <h3 className='font-semibold'>{subcat.subcat_name_bn}</h3>
+          <h3 className='font-semibold  bg-white p-4 mt-4 mx-4 rounded-2xl'>
+            <span className='text-green-600'>পরিচ্ছেদঃ </span>
+            {subcat.subcat_name_bn}
+          </h3>
+
           <ul>
             {groupedDuas[subcat.subcat_id]?.map((dua, duaIndex) => (
               <li
-                className='p-4'
+                className=''
                 key={duaIndex}
                 ref={duaId === dua.id ? duaRef : null}
               >
-                <div>{dua.top_bn}</div>
-                <div>
-                  <ReactPlayer width='300px' url={dua.audio} controls />
+                <div className=' bg-white p-4 mt-4 mx-4 rounded-2xl'>
+                  <div className='flex gap-4 mx-4 '>
+                    <div>
+                      <Image src={AllahLogo} alt='logo'></Image>
+                    </div>
+
+                    <div className='text-green-600 mt-2 mb-4'>
+                      {dua.dua_name_bn}
+                    </div>
+                  </div>
+
+                  <div className='flex flex-col gap-4'>
+                    <div>{dua.top_bn}</div>
+                    <div>{dua.dua_arabic}</div>
+                    <div>
+                      <span className='text-semibold'>উচ্চারণঃ</span>{' '}
+                      {dua.transliteration_bn}
+                    </div>
+
+                    <div>{dua.translation_bn}</div>
+                    <div className='mt-4 mb-4 flex flex-col'>
+                      <span className='text-green-600'>রেফারেন্স</span>
+                      <span> {dua.refference_bn}</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <audio controls>
+                      <source src={dua.audio} type='audio/mpeg' />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
                 </div>
               </li>
             ))}

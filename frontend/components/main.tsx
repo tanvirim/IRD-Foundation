@@ -4,17 +4,19 @@ import React, { useState } from 'react';
 import { CategoryTable, DuaList, Navbar } from '@/components';
 import { ExitSvg } from '@/public';
 import Image from 'next/image';
+import { useDuaStore } from '@/store';
+
 const Main = () => {
-  const [showCategoryTable, setShowCategoryTable] = useState<boolean>(true);
+  const { isBooleanValue, setBooleanValue } = useDuaStore();
 
   const handleButtonClick = () => {
-    setShowCategoryTable((prevState) => !prevState);
+    setBooleanValue(!isBooleanValue);
   };
 
   return (
     <div>
       <div className='flex overflow-hidden'>
-        {showCategoryTable && (
+        {isBooleanValue && (
           <div className='flex-1 w-full  md:w-1/2'>
             <div className='flex justify-between bg-green-600 text-white p-2 '>
               <p>Category</p>
@@ -22,14 +24,11 @@ const Main = () => {
                 <Image src={ExitSvg} alt='polygon' width={20} height={20} />
               </button>
             </div>
-            <CategoryTable setShowCategoryTable={setShowCategoryTable} />
+            <CategoryTable />
           </div>
         )}
 
         <div className='flex-1 md:w-1/2 overflow-scroll'>
-          <button onClick={handleButtonClick} className='md:hidden'>
-            categories
-          </button>
           <DuaList />
         </div>
       </div>

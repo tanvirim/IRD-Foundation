@@ -14,11 +14,7 @@ interface subCatArgument {
   category: Category;
 }
 
-interface Props {
-  setShowCategoryTable: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const CategoryTable = ({ setShowCategoryTable }: Props) => {
+const CategoryTable = () => {
   const { setCategory, setSubcategories } = useDuaStore();
 
   // State variables
@@ -106,7 +102,6 @@ const CategoryTable = ({ setShowCategoryTable }: Props) => {
                     ? subcategoriesMap.get(cat.cat_id) || []
                     : []
                 }
-                setShowCategoryTable={setShowCategoryTable}
               />
             </li>
           </ul>

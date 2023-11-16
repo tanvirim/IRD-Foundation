@@ -23,3 +23,17 @@ export interface Dua {
   cat_id: string;
   dua_name_en: string;
 }
+
+export interface Dua {
+  id: string;
+  cat_id: string;
+  dua_name_en: string;
+  top_bn: string;
+  audio: string;
+  subcat_id: string;
+  dua_name_bn: string;
+  refference_bn: string;
+  transliteration_bn: string;
+  translation_bn: string;
+  dua_arabic: string;
+}

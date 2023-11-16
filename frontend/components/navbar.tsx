@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <>
       <div className='flex justify-between mb-2'>
-        <p>Duas Page</p>
+        <p>দোয়া সমূহ</p>
         <div className='flex'>
           <Image src={userLogo} alt='polygon' width={30} height={30} />
           <Image className='mt-5' src={polygon} alt='polygon' />
