@@ -46,7 +46,7 @@ const SubcategoriesComponent = ({ subcategories }: Props) => {
             onClick={() =>
               fetchDuas({ catId: subCat.cat_id, subCat_id: subCat.subcat_id })
             }
-            className='mx-4 my-2 cursor-pointer'
+            className=' border-l p-2 border-dotted border-black  mx-6 my-2 cursor-pointer font-medium'
           >
             {subCat.subcat_name_bn}
           </li>

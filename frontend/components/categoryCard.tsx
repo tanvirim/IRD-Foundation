@@ -15,7 +15,7 @@ const CategoryCard = ({ Category }: Props) => {
         </div>
 
         <div>
-          <p className='text-sm font-semibold'>{Category.cat_name_en}</p>
+          <p className='text-sm font-semibold'>{Category.cat_name_bn}</p>
           <p className='text-xs'>
             <span className='mr-2 '>Subcategory:</span>
             {Category.no_of_subcat}

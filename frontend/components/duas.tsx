@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 'use client';
+import { IoIosArrowForward } from 'react-icons/io';
 import React from 'react';
 import { Dua } from '@/types';
 import { useDuaStore } from '@/store';
@@ -15,7 +16,7 @@ interface Props {
 
 const Duas = ({ duas }: Props) => {
   const { setDuaId, setBooleanValue, isBooleanValue } = useDuaStore();
-  const handleCategoryClick = ({ duaId }: DuaArgument) => {
+  const handlesubcategoryClick = ({ duaId }: DuaArgument) => {
     setDuaId(duaId);
 
     if (window.innerWidth < 768) {
@@ -26,12 +27,19 @@ const Duas = ({ duas }: Props) => {
   return (
     <div>
       {duas?.map((dua, index) => (
-        <ul key={index}>
+        <ul className='' key={index}>
           <li
-            onClick={() => handleCategoryClick({ duaId: dua.id })}
-            className='mx-8 cursor-pointer'
+            onClick={() => handlesubcategoryClick({ duaId: dua.id })}
+            className='ml-10 cursor-pointer border-l p-2 border-dotted border-black '
           >
-            {dua.dua_name_en}
+            <div className='flex'>
+              <span>
+                {' '}
+                <IoIosArrowForward />
+                {'  '}
+              </span>{' '}
+              <div> {dua.dua_name_bn}</div>
+            </div>
           </li>
         </ul>
       ))}
