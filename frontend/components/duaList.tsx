@@ -83,15 +83,15 @@ const DuaList = () => {
   });
 
   return (
-    <div className='overflow-x-hidden overflow-y-scroll h-screen'>
+    <div className=' overflow-y-scroll h-screen'>
       <div
         onClick={handleButtonClick}
-        className='flex gap-2  cursor-pointer text-lg bg-white p-4 mx-4 rounded-2xl'
+        className='flex gap-2  cursor-pointer text-lg bg-white p-4 mx-4 rounded-2xl md:hidden'
       >
-        <div className='mt-1 text-green-600'>
+        <div className='mt-1 text-green-600 '>
           <FaBars />
         </div>
-        <div className='font-semibold'>{category.cat_name_bn}</div>
+        <div className='font-semibold '>{category.cat_name_bn}</div>
       </div>
 
       {subcategories.map((subcat, index) => (

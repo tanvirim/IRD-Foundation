@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className='overflow-hidden relative'>
+      <body className='overflow-hidden relative md:ml-[165px] md:mr-[40px] '>
         <Navbar />
         <main>{children}</main>
       </body>
