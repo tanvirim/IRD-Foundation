@@ -84,7 +84,7 @@ const CategoryTable = () => {
   };
 
   return (
-    <div className='w-[429px] h-[537px] overflow-auto'>
+    <div className='w-[429px] h-[670px] overflow-auto'>
       {memoizedCategoryData ? (
         memoizedCategoryData.categories.map((cat, index) => (
           <ul key={index}>
