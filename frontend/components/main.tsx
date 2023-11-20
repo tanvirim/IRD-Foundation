@@ -18,7 +18,7 @@ const Main = () => {
   return (
     <>
       <div className='flex  '>
-        <section className='hidden md:block'>
+        <section className='hidden lg:block'>
           <aside>
             {' '}
             <LeftSidebar />
@@ -45,7 +45,7 @@ const Main = () => {
           </div>
         </section>
 
-        <section className='hidden md:block'>
+        <section className='hidden lg:block'>
           <aside>
             <RightSidebar />
           </aside>
