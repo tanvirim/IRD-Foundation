@@ -45,9 +45,6 @@ const CategoryTable = () => {
     fetchData();
   }, []);
 
-  // Memoize the categoryData
-  const memoizedCategoryData = useMemo(() => categoryData, [categoryData]);
-
   // Fetch subcategories and handle toggle effect
   const fetchSubcategories = ({ category }: subCatArgument) => {
     setCategory(category);
@@ -83,10 +80,33 @@ const CategoryTable = () => {
     }
   };
 
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+  // Filter categories based on the search term
+  const filteredCategories = categoryData
+    ? categoryData.categories.filter((cat) =>
+        cat.cat_name_bn.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
   return (
     <div className='w-[429px]  h-[670px] overflow-auto bg-white md:w-[350px]'>
-      {memoizedCategoryData ? (
-        memoizedCategoryData.categories.map((cat, index) => (
+      <div className='flex  p-4 '>
+        <input
+          type='search'
+          name='categorysearch'
+          id=''
+          className='border border-gray-300 p-2 w-[300px] '
+          placeholder='Search categories...'
+          onChange={handleSearch}
+          value={searchTerm}
+        />
+      </div>
+
+      {filteredCategories ? (
+        filteredCategories.map((cat, index) => (
           <ul key={index}>
             <li
               className='cursor-pointer my-4'

@@ -38,6 +38,8 @@ export const useDuaStore = create<DuaStore>((set) => ({
     no_of_dua: 0,
     cat_icon: '',
   },
+  setCategory: (newCategory: Category) => set({ category: newCategory }),
+
   subcategories: [
     {
       id: '1',
@@ -99,8 +101,6 @@ export const useDuaStore = create<DuaStore>((set) => ({
       no_of_dua: 1,
     },
   ],
-
-  setCategory: (newCategory: Category) => set({ category: newCategory }),
 
   setSubcategories: (newSubcategories: SubCategory[]) =>
     set({ subcategories: newSubcategories }),

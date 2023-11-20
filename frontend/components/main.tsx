@@ -27,8 +27,8 @@ const Main = () => {
         <section className='flex overflow-hidden '>
           {isBooleanValue && (
             <div className=''>
-              <div className='flex justify-between bg-green-600 text-white p-4 rounded-t-lg'>
-                <p className='ml-32'>ক্যাটাগরি</p>
+              <div className='flex justify-between bg-green-600 text-white px-14 py-4 rounded-t-lg'>
+                <p className='ml-28'>ক্যাটাগরি</p>
                 <button onClick={handleButtonClick} className='md:hidden'>
                   <Image src={ExitSvg} alt='polygon' width={20} height={20} />
                 </button>
