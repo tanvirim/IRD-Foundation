@@ -17,9 +17,9 @@ const DuaCard = ({ dua }: Props) => {
         <div className='text-green-600 mt-2 mb-4'>{dua.dua_name_bn}</div>
       </div>
 
-      <div className='flex flex-col gap-4'>
+      <div className='flex flex-col gap-6'>
         <div>{dua.top_bn}</div>
-        <div className='text-2xl'>{dua.dua_arabic}</div>
+        <div className='text-2xl ml-auto'>{dua.dua_arabic}</div>
         {dua.transliteration_bn && (
           <div className='italic'>
             <span className='text-semibold '>উচ্চারণঃ </span>
