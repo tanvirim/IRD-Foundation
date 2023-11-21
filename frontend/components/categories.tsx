@@ -105,7 +105,7 @@ const CategoryTable = () => {
         />
       </div>
 
-      {filteredCategories ? (
+      {categoryData ? (
         filteredCategories.map((cat, index) => (
           <ul key={index}>
             <li

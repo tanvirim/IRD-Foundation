@@ -4,7 +4,7 @@ const SkeletonColumn = () => {
   const skeletonItems = Array.from({ length: 7 }, (_, index) => (
     <div
       key={index}
-      className='mt-2 rounded-lg mb-2 w-full h-[65px] bg-gray-300 '
+      className='mt-2 ml-2 rounded-lg mb-2 w-full h-[65px] bg-gray-300 animate-pulse'
     ></div>
   ));
 
