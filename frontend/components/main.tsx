@@ -20,7 +20,6 @@ const Main = () => {
       <div className='flex  '>
         <section className='hidden lg:block'>
           <aside>
-            {' '}
             <LeftSidebar />
           </aside>
         </section>

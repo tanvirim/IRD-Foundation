@@ -5,7 +5,6 @@ const dotenv = require('dotenv');
 
 const app = express();
 
-//config dotenv file
 dotenv.config();
 
 app.use(cors());
@@ -23,6 +22,8 @@ const db = new sqlite3.Database(
 );
 
 //query
+
+//route to fetch caterogies subcategories and dua names
 app.get('/', (req, res) => {
   const { category_id, subcategory_id } = req.query;
 
@@ -64,7 +65,7 @@ app.get('/', (req, res) => {
   }
 });
 
-// Create a route to fetch all duas from a specific category
+//route to fetch all duas
 app.get('/duas', (req, res) => {
   const { category_id } = req.query;
 
@@ -81,31 +82,6 @@ app.get('/duas', (req, res) => {
     res.json({ duas: rows });
   });
 });
-
-// app.get('/duas', (req, res) => {
-//   const { cat_id, subcat_id } = req.query;
-
-//   if (!cat_id) {
-//     res.status(400).json({ error: 'Category ID is required.' });
-//     return;
-//   }
-
-//   let query = 'SELECT * FROM dua WHERE cat_id = ?';
-//   const params = [cat_id];
-
-//   if (subcat_id) {
-//     query += ' AND subcat_id = ?';
-//     params.push(subcat_id);
-//   }
-
-//   db.all(query, params, (err, rows) => {
-//     if (err) {
-//       res.status(500).json({ error: err.message });
-//       return;
-//     }
-//     res.json({ duas: rows });
-//   });
-// });
 
 const port = 8080 || process.env.PORT;
 app.listen(port, () => {
